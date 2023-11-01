@@ -2,7 +2,7 @@
 @import 'primereact/resources/themes/saga-blue/theme.css';
 @import 'primereact/resources/primereact.min.css';
 @import 'primeflex/primeflex.css';
-@import 'tailwindcss/base';
+
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
@@ -18,7 +18,6 @@ body{
   padding: 0;
 }
 .container {
-  width: 80%; /* Ancho del contenedor */
   margin: 0 auto; /* Centra el contenedor horizontalmente */
   padding: 20px; /* Espacio interno dentro del contenedor */
 }
