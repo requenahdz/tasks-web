@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import Menu from "./Menu";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const Layout = ({ children }) => {

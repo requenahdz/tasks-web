@@ -1,6 +1,6 @@
 import DashboardContainer from "../modules/dashboard";
 import TaskContainer from "../modules/tasks";
-import TaskNewContainer from "../modules/tasks/new";
+import TaskFormContainer from "../modules/tasks/form";
 
 const Routers = [
   {
@@ -21,7 +21,13 @@ const Routers = [
     key: "access",
     name: "Tareas",
     path: "/tasks/new",
-    element: <TaskNewContainer />,
+    element: <TaskFormContainer />,
+  },
+  {
+    key: "access",
+    name: "Tareas",
+    path: "/tasks/:id",
+    element: <TaskFormContainer />,
   },
 ];
 export default Routers;

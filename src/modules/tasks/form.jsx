@@ -1,67 +1,41 @@
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
-import { useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
+import { Calendar } from "primereact/calendar";
+import useConfig from "./useConfig";
 
-const INIT = {
-  name: "",
-  date_start: "",
-  status: "",
-  comments: "",
-  priority: "",
-  time: "",
-};
-const STATUS = [
-  { label: "En progreso", value: "in_progress" },
-  { label: "Terminado", value: "finished" },
-  { label: "Pendiente", value: "pending" },
-];
-const PRIORITY = [
-  { label: "Alta", value: "high" },
-  { label: "Media", value: "medium" },
-  { label: "Baja", value: "low" },
-];
-
-const TaskNew = () => {
-  const navigate = useNavigate();
-  const [data, setData] = useState(INIT);
-  const disabled = useMemo(
-    () =>
-      !data.name ||
-      !data.date_start ||
-      !data.status ||
-      !data.comments ||
-      !data.priority ||
-      !data.time,
-    [data]
-  );
-
-  const handleSumbit = (e) => {
-    e.preventDefault();
-    axios
-      .post("http://robertorequena.mx/api/A003/tasks", data)
-      .then((res) => {
-        setData(INIT);
-        toast.success("La tarea se ha creado correctamente");
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error("Ocurrio un error al crear la tarea");
-      });
-  };
+const TaskForm = () => {
+  const {
+    data,
+    setData,
+    STATUS,
+    PRIORITY,
+    navigate,
+    disabled,
+    handleSumbit,
+    loading,
+    title
+  } = useConfig();
 
   return (
     <div className="mx-auto  max-w-xl ">
-      <div className="text-3xl font-semibold mb-5 ">Nueva tarea</div>
-      <form className="p-10 bg-gray-50		">
+      <div className="text-3xl font-semibold mb-3 ">{title}</div>
+      <form className="p-10 bg-gray-50">
         <div className="mb-3">
-          <label
-            className="block text-sm font-medium text-gray-600"
-            htmlFor="name"
-          >
+          <label className="block  font-medium text-gray-800" htmlFor="name">
+            Cliente
+          </label>
+          <InputText
+            placeholder="Escribe el cliente"
+            name="code"
+            value={data.code}
+            onChange={(e) => setData({ ...data, code: e.target.value })}
+            className=" w-full"
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="block  font-medium text-gray-800" htmlFor="name">
             Nombre
           </label>
           <InputText
@@ -69,31 +43,30 @@ const TaskNew = () => {
             name="name"
             value={data.name}
             onChange={(e) => setData({ ...data, name: e.target.value })}
-            className="p-inputtext w-full"
+            className=" w-full"
           />
         </div>
 
         <div className="mb-4">
           <label
-            className="block text-sm font-medium text-gray-600"
+            className="block  font-medium text-gray-800"
             htmlFor="date_start"
           >
             Fecha de inicio
           </label>
-          <InputText
+
+          <Calendar
             value={data.date_start}
             onChange={(e) => setData({ ...data, date_start: e.target.value })}
             name="date_start"
-            type="date"
-            className="p-inputtext w-full"
-          />
+            className="w-full"
+            placeholder="Selecciona la fecha de inicio"
+            dateFormat="dd/mm/yy"
+          ></Calendar>
         </div>
 
         <div className="mb-4">
-          <label
-            className="block text-sm font-medium text-gray-600"
-            htmlFor="nombre"
-          >
+          <label className="block  font-medium text-gray-800" htmlFor="nombre">
             Estado
           </label>
           <Dropdown
@@ -107,7 +80,7 @@ const TaskNew = () => {
 
         <div className="mb-4">
           <label
-            className="block text-sm font-medium text-gray-600"
+            className="block  font-medium text-gray-800"
             htmlFor="comments"
           >
             Comentario
@@ -116,15 +89,12 @@ const TaskNew = () => {
             value={data.comments}
             onChange={(e) => setData({ ...data, comments: e.target.value })}
             placeholder="Escribe el comentario"
-            className="p-inputtext w-full"
+            className=" w-full"
           />
         </div>
 
         <div className="mb-4">
-          <label
-            className="block text-sm font-medium text-gray-600"
-            htmlFor="nombre"
-          >
+          <label className="block  font-medium text-gray-800" htmlFor="nombre">
             Prioridad
           </label>
           <Dropdown
@@ -137,18 +107,16 @@ const TaskNew = () => {
         </div>
 
         <div className="mb-4">
-          <label
-            className="block text-sm font-medium text-gray-600"
-            htmlFor="time"
-          >
+          <label className="block  font-medium text-gray-800" htmlFor="time">
             Tiempo
           </label>
+
           <InputText
             onChange={(e) => setData({ ...data, time: e.target.value })}
             name="time"
             type="time"
             value={data.time}
-            className="p-inputtext w-full"
+            className="w-full"
           />
         </div>
 
@@ -162,6 +130,7 @@ const TaskNew = () => {
           <Button
             label="Guardar"
             disabled={disabled}
+            loading={loading}
             icon="pi pi-save"
             onClick={handleSumbit}
           />
@@ -171,4 +140,4 @@ const TaskNew = () => {
   );
 };
 
-export default TaskNew;
+export default TaskForm;
