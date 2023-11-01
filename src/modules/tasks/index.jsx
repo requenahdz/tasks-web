@@ -3,9 +3,7 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import axios from "axios";
-
 export default function Tasks() {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
@@ -19,10 +17,7 @@ export default function Tasks() {
       .then((res) => {
         setData(res.data.reverse());
       })
-      .catch((error) => {
-        console.error(error);
-        toast.error('Ocurrio un error al crear la tarea')
-      });
+      .catch((error) => {});
   };
 
   return (
