@@ -26,7 +26,7 @@ const PRIORITY = [
   { label: "Baja", value: "low", color: "green-500" },
 ];
 
-const API_URL = "http://robertorequena.mx/api/A003/tasks";
+const API_URL = "https://robertorequena.mx/api/A003/tasks";
 
 const useConfig = () => {
   const [data, setData] = useState([]);
