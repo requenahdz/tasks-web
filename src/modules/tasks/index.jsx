@@ -4,7 +4,7 @@ import { Button } from "primereact/button";
 import { useEffect } from "react";
 import useConfig from "./useConfig";
 import { ProgressSpinner } from "primereact/progressspinner";
-import { findInObject, formatTime } from "../../utils";
+import { findInObject } from "../../utils";
 import Status from "../../components/Status";
 import moment from "moment";
 export default function Tasks() {

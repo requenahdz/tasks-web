@@ -106,20 +106,6 @@ const TaskForm = () => {
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block  font-medium text-gray-800" htmlFor="time">
-            Tiempo
-          </label>
-
-          <InputText
-            onChange={(e) => setData({ ...data, time: e.target.value })}
-            name="time"
-            type="time"
-            value={data.time}
-            className="w-full"
-          />
-        </div>
-
         <div className="flex " style={{ justifyContent: "space-between" }}>
           <Button
             label="Regresar"
