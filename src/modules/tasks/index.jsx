@@ -50,6 +50,7 @@ export default function Tasks() {
           <Column
             field="date_start"
             header="Fecha inicio"
+            style={{minWidth: "130px"}}
             body={(item) => moment(item.date_start).format("DD/MM/YYYY")}
           ></Column>
           <Column
