@@ -55,6 +55,7 @@ export default function Tasks() {
           <Column
             field="status"
             header="Estatus"
+            style={{minWidth: "130px"}}
             body={(item) => {
               const find = findInObject(item.status, STATUS);
               return <Status label={find.label} color={find.color} />;
