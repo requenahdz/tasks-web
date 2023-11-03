@@ -24,6 +24,9 @@ export default function Tasks() {
           label="Exportar"
           icon="pi pi-file-excel"
           severity="success"
+          onClick={() => {
+            alert("Proximamente...")
+          }}
         />
         <Button
           className="ml-3"

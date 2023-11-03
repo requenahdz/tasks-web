@@ -22,3 +22,13 @@ body{
   padding: 20px; /* Espacio interno dentro del contenedor */
 }
 
+.p-menubar,.p-menubar-root-list	{
+  background-color: black;
+  border: none;
+}
+.p-menuitem-text,.p-menuitem-icon{
+  color: white;
+}
+.p-menuitem-link:hover{
+  background-color: transparent;
+}
