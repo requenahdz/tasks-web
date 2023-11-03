@@ -21,9 +21,9 @@ const STATUS = [
   { label: "Pendiente", value: "pending", color: "cyan-600" },
 ];
 const PRIORITY = [
-  { label: "Alta", value: "high", color: "red-500" },
-  { label: "Media", value: "medium", color: "yellow-500" },
-  { label: "Baja", value: "low", color: "green-500" },
+  { label: "Alta", value: "high", color: "red-500", level: 1 },
+  { label: "Media", value: "medium", color: "yellow-500", level: 2 },
+  { label: "Baja", value: "low", color: "green-500", level: 3 },
 ];
 
 const API_URL = "https://robertorequena.mx/api/A003/tasks";
@@ -66,7 +66,17 @@ const useConfig = () => {
     axios
       .get(API_URL)
       .then((res) => {
-        setCollection(res.data.reverse());
+        let tpm = res.data;
+        tpm = tpm.sort(function (a, b) {
+          const priorityObj = {};
+          for (const priority of PRIORITY) {
+            priorityObj[priority.value] = priority.level;
+          }
+          console.log(priorityObj);
+          return priorityObj[a.priority] - priorityObj[b.priority];
+        });
+
+        setCollection(tpm);
       })
       .catch((error) => {
         console.error(error);

@@ -4,11 +4,12 @@ import { Button } from "primereact/button";
 import { useEffect } from "react";
 import useConfig from "./useConfig";
 import { ProgressSpinner } from "primereact/progressspinner";
-import { findInObject } from "../../utils";
+import { findInObject, formatTime } from "../../utils";
+import Status from "../../components/Status";
+import moment from "moment";
 export default function Tasks() {
   const { getData, collection, navigate, loading, STATUS, PRIORITY } =
     useConfig();
-
   useEffect(() => {
     getData();
   }, []);
@@ -43,37 +44,45 @@ export default function Tasks() {
 
           <Column field="name" header="Nombre"></Column>
 
-          <Column field="date_start" header="Fecha inicio"></Column>
+          <Column
+            field="date_start"
+            header="Fecha inicio"
+            body={(item) => moment(item.date_start).format("DD/MM/YYYY")}
+          ></Column>
           <Column
             field="status"
             header="Estatus"
             body={(item) => {
               const find = findInObject(item.status, STATUS);
-              return (
-                <div
-                  className={`text-white  text-center	rounded-xl	 p-1 font-semibold bg-${find.color}`}
-                >
-                  {find.label}
-                </div>
-              );
+              return <Status label={find.label} color={find.color} />;
             }}
           ></Column>
-          <Column field="comments" header="Comentarios"></Column>
+          <Column
+            field="comments"
+            header="Comentarios"
+           style={{maxWidth: "400px"}}
+          ></Column>
           <Column
             field="priority"
             header="Proridad"
             body={(item) => {
               const find = findInObject(item.priority, PRIORITY);
+              return <Status label={find.label} color={find.color} />;
+            }}
+          ></Column>
+          <Column
+            field="time"
+            header="Tiempo"
+            body={(item) => {
               return (
-                <div
-                  className={`text-white text-center rounded-xl	 p-1 font-semibold  bg-${find.color}`}
-                >
-                  {find.label}
-                </div>
+                <>
+                  {(
+                    moment().diff(moment(item.created_at), "hours")+" hrs"
+                  )}
+                </>
               );
             }}
           ></Column>
-          <Column field="time" header="Tiempo"></Column>
           <Column
             header="Acciones"
             body={(item) => {
@@ -81,7 +90,7 @@ export default function Tasks() {
                 <Button
                   rounded
                   outlined
-                  onClick={()=>navigate(`/tasks/${item.id}`)}
+                  onClick={() => navigate(`/tasks/${item.id}`)}
                   icon="pi pi-arrow-right"
                 />
               );
