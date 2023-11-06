@@ -57,7 +57,7 @@ const useConfig = () => {
       !data.date_start ||
       !data.status ||
       !data.comments ||
-      !data.priority
+      !data.priority,
     [data]
   );
   const getData = async () => {
