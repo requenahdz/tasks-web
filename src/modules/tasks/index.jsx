@@ -65,7 +65,7 @@ export default function Tasks() {
           <Column
             field="comments"
             header="Comentarios"
-           style={{maxWidth: "400px"}}
+           style={{maxWidth: "500px"}}
           ></Column>
           <Column
             field="priority"
