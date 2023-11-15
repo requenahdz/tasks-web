@@ -45,7 +45,7 @@ export default function Tasks() {
           <Column field="id" header="#"></Column>
           <Column field="code" header="Cliente"></Column>
 
-          <Column field="name" header="Nombre"></Column>
+          <Column field="name" header="Nombre" style={{maxWidth: "150px"}} ></Column>
 
           <Column
             field="date_start"
@@ -65,7 +65,7 @@ export default function Tasks() {
           <Column
             field="comments"
             header="Comentarios"
-           style={{maxWidth: "500px"}}
+           style={{maxWidth: "600px"}}
           ></Column>
           <Column
             field="priority"
