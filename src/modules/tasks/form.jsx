@@ -3,6 +3,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import { Calendar } from "primereact/calendar";
+import { Checkbox } from "primereact/checkbox";
 import useConfig from "./useConfig";
 
 const TaskForm = () => {
@@ -17,14 +18,14 @@ const TaskForm = () => {
     loading,
     title,
   } = useConfig();
-
+  
   return (
     <>
       <div className="text-3xl font-semibold mb-3 ">{title}</div>
       <div className="mx-auto  max-w-5xl ">
         <form className="p-10 bg-gray-50">
-          <div className="grid  gap-5">
-            <div className="mb-3">
+          <div className="grid  grid-cols-2 gap-5">
+            <div className="mb-3 f">
               <label
                 className="block  font-medium text-gray-800  mb-2"
                 htmlFor="name"
@@ -38,6 +39,19 @@ const TaskForm = () => {
                 onChange={(e) => setData({ ...data, code: e.target.value })}
                 className=" w-full"
               />
+            </div>
+
+            <div className="mb-4 flex items-end">
+            
+              <Checkbox
+                inputId="active"
+                checked={!!data.active}
+                className="mr-2"
+                onChange={(e) => setData({ ...data, active: +e.checked })}
+              />
+                <label  htmlFor="active">
+                Activo
+              </label>
             </div>
           </div>
 
@@ -112,6 +126,8 @@ const TaskForm = () => {
               />
             </div>
           </div>
+
+          <div className="grid grid-cols-2 gap-5"></div>
 
           <div className="grid  gap-5">
             <div className="mb-4">

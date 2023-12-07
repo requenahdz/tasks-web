@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import moment from "moment";
 import { useParams } from "react-router-dom";
+import { convertObjectToUri, isEmtyObject } from "../../utils";
 
 const INIT = {
   id: null,
@@ -14,6 +15,7 @@ const INIT = {
   comments: "",
   priority: "",
   time: "",
+  active:1,
 };
 const STATUS = [
   { label: "En progreso", value: "in_progress", color: "purple-600" },
@@ -30,10 +32,18 @@ const API_URL = "https://robertorequena.mx/api/A003/tasks";
 
 const useConfig = () => {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({});
   const [collection, setCollection] = useState([]);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const title = useMemo(() => (id ? "Editar tarea" : "Crear tarea"), [id]);
+
+  useEffect(() => {
+    if (id) {
+      getDataById();
+      console.log('by id')
+    }
+  }, []);
 
   const sendData = useMemo(
     () => ({
@@ -44,10 +54,10 @@ const useConfig = () => {
   );
 
   useEffect(() => {
-    if (id) {
-      getDataById();
+    if (!isEmtyObject(filters)) {
+      getData(filters);
     }
-  }, [id]);
+  }, [filters]);
 
   const navigate = useNavigate();
 
@@ -60,10 +70,15 @@ const useConfig = () => {
       !data.priority,
     [data]
   );
-  const getData = async () => {
+  const getData = async (filter = {}) => {
     setLoading(true);
+    let params = "";
+    if (!isEmtyObject(filter)) {
+      setFilters(filter);
+      params = convertObjectToUri(filter);
+    }
     axios
-      .get(API_URL)
+      .get(API_URL + params)
       .then((res) => {
         let tpm = res.data;
         tpm = tpm.sort(function (a, b) {
@@ -71,7 +86,6 @@ const useConfig = () => {
           for (const priority of PRIORITY) {
             priorityObj[priority.value] = priority.level;
           }
-          console.log(priorityObj);
           return priorityObj[a.priority] - priorityObj[b.priority];
         });
 
@@ -155,6 +169,8 @@ const useConfig = () => {
     navigate,
     loading,
     title,
+    filters,
+    setFilters,
   };
 };
 export default useConfig;
